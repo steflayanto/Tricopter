@@ -1,0 +1,105 @@
+2/21/2016
+New Frame
+
+2/23/2016
+Updated Prop Vectors
+Updated ConvertOutput Section
+ISSUE Function may cause values over 100% to be written to motor.
+Examined Values in Program
+Added New tab to tricopter excel file for program information
+
+2/25/2016
+Set all PID output limits to -50 until 50
+Updated writeServo Command to new servo values
+Set heading PID output to convert to -40% to 40% range (percentage of total motor thrust) so that at hovering motor thrust (~80%) servo angle will not exceed 30deg
+Set Calibration for radio inputs (pitch, roll, heading only), set to calibrate upon completion of gyro calibration
+Set Servo to 110 - 180 degrees with 145 as midpoint, rather than use writeMicroseconds();
+Inversed Heading PID controller to align with controller.
+
+2/26/2016
+Connected everything and ran program. significant amounts of servo wobble.
+Added landing gear
+converted servo control back from degrees to microseconds
+Added Battery mount with ziptie
+Rough test without proper setup, balancing point foudn to be around 2200-2250. Adjusted servo dowel shorter
+Main problem is servo wiggle. considering MAF.
+
+3/1/2016
+Tried connecting servo to BEC instead of arduino 5v to reduce noise. ESC/Servo did not initialize at all
+Changed thrust, pitch setpoint, roll setpoint, heading setpoint to integers to reduce noise. Seems alot more stable
+Modified backprop funciton such that vertical component of back prop must be greater than horisontal component
+Updated servos specs onto excel doc
+Programmed all ESCs to LiPo, and soft acceleration start ups
+Built frame for heading PID tuning by taping flat board to ice skating spinner
+limiter set at 75.
+
+3/5/2016
+Plan to convert floats to ints
+Converted floats to doubles
+Tuned PID to approx 0.2
+Set heading trim to 50 (on servo range of 1600+trim-2400+trim)
+Observed, able to yaw clockwise easily, but anticlockwise is slow.
+Yaw is held, despite oscillating. Values of PID are 0.2, 0.2, 0.01 respectively
+Small, low frequency oscillations observed even when no visible yaw present. suspected cause is gyroscope noise, rather than any float-double-int conversions. also possibly caused by transmitter input noise.
+transmitter input noise ruled out. attempted testing with setpoint permanently set to 0, oscillations still evident.
+changed Gyro MAF length from 5 to 10
+
+Added rollRatePID
+set roll set rollsetpoint to 0.0 permanently
+reversed rollPID controller direction
+
+3/11/16
+Set roll setpoint to stick input
+set rollrate PID setpoint to roll output. set roll output to roll setpoint.
+reorganized PID program to compute roll and pitch first, then compute rollRate and pitchRate
+Tested while holding, appears to be a success.
+Set sample time to 50 instead of 100
+Setting PITCH pid to identical settings to test.
+test flight. BEC not functioning. plugged Vin to LiPo battery charger socket. tricopter unresponsive despite motors being initialized. copter crashed.
+
+3/12/16
+Realized that arduino requires more than 5V for external power. second guessing need for BEC
+Ran test flight with copter still connected to comp. Back lifts off too fast. front is too weak/heavy.
+After umbilical tests, determined that copter always tilts right and forward even with maximum stick correction. 
+When printing center of thrust values, found that values never exceed much more than 10.
+Findings:
+1. Set trims for centre of thrust (since copter is asymmetrical)
+2. Perform static tuning for roll/pitch (after trying to set trims)
+After adding trim, values still tend to stay near 10.0
+Trim affects motor startup. Trimming back and left props made them start after right one.
+Programmed convertOutput tab to factor in CoT coordinates ONLY if total thrust is over 25
+Noted that lift-off value is approimately 60-70% total thrust
+trims noted to be approx 5 for X, and 10 for Y.
+SMALL SUCCESS!!!!! First technical lift-off. all three legs off the ground for a second, despite obvious instability.
+Tried to replicate feat, but battery died before I could do so.
+Noted that battery can come loose and shift forward/backward.
+
+3/13/2016
+Ran test, backprop went insane and went on full throttle. problem found to be heading PID.
+Changed left stick to be throttle and roll, and right stick to be pitch and yaw.
+Ran test flight. mixed success. Hard to control.
+Inversed heading setpoint.
+switched back yaw - roll swap
+
+18/03/2016
+Setup apparatus for PID tuning of tricopter
+disabled yaw for roll trimming.
+disabled computation of yaw PID
+
+09/04/2016
+Secured Arduino to frame with two screws
+
+11/04/2016
+Decided to try replace Center of Thrust idea with accurate mathematics
+"Perhaps it isnt the fine tuning of PID values that is preventing the copter from flying"
+For Stability, need to investigate ALL factors, not just PID values, such as:
+ - Delay between esc.write & motor RPM response
+ - Delay between detection of angular change & actual angular change
+ - Delay caused by process of calculation of PID response
+ - Date update caused by length of gyro moving average filter
+ - Sampling time of PID input
+ - interval time of PID output
+ - Length of arms of tricopter
+ - center of gravity
+ - numerical approximation errors in storage type conversion (float-int etc.)
+realized I have been caught up in trying to fine-tune the variable when in fact the problem could lie in a great many other weaknesses.
