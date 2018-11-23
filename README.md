@@ -9,10 +9,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-PinChangeInt
-
 There is a detailed parts list in an excel file. The RC transmitter used was a Turnigy 9X transmitter.
 
+PinChangeInt
 https://playground.arduino.cc/Main/PinChangeInt
 
 Arduino PID Library
