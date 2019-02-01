@@ -3,21 +3,21 @@
 //STATIC SETTINGS
 
 //Pin Assignment
-#define CH_ONE_PIN 3
-#define CH_TWO_PIN 4
-#define CH_THREE_PIN 5
-#define CH_FOUR_PIN 7
-#define AUX5_IN_PIN 8
-#define AUX6_IN_PIN 2
-#define escLPin 6
-#define escRPin 9
-#define escBPin 10
-#define yawPin 11
+#define CH_ONE_PIN 3    //Radio Channel input pins (based on the Turnigy 9X receiver)
+#define CH_TWO_PIN 4    
+#define CH_THREE_PIN 5  
+#define CH_FOUR_PIN 7   
+#define AUX5_IN_PIN 8   //These are the two channels for auxiliary inputs on the Turnigy 9X receiver
+#define AUX6_IN_PIN 2   
+#define escLPin 6       //Left ESC signal output pin (all ESCs behave like servo objects)
+#define escRPin 9       //Right ESC signal output pin 
+#define escBPin 10      //Back ESC signal output pin 
+#define yawPin 11       //Yaw servo signal output pin
 
 //Safety
-int limit = 1000;
+int limit = 1000; //this can be changed to limit thrust for safety (0-1000 -> 0.0%-100.0%)
 
-//Trim
+//Trim Values. Set through trial and error.
 #define COT_X_TRIM 0
 #define COT_Y_TRIM -20000
 #define YAW_TRIM -15
