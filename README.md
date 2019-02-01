@@ -26,6 +26,10 @@ https://github.com/br3ttb/Arduino-PID-Library/blob/master/PID_v1.h
 
 The code for the Tricopter is in the folder Tricopter_2017.
 
+To get started, clone the repo, and use the Arduino IDE to open Tricopter_2017.ino. All the other files should automatically open as tabs in the Arduino IDE, as long as they files are in the same folder.
+
+Pinouts and settings can be found in Header.h (remember that this was run on an Arduino Uno)
+
 In the main repo I also included a parts/specs list and some data from static test experiments. I also included some diagrams, references, and manuals used.
 
 Let me know if you have any questions. Email me at stef.layanto@gmail.com
